@@ -1,0 +1,218 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+ 
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>MQTTClient</groupId>
+  <artifactId>MQTTClient</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+  
+  <repositories>
+  	<repository>
+        <id>scala-tools.org</id>
+        <name>Scala-tools Maven2 Repository</name>
+        <url>http://scala-tools.org/repo-releases</url>
+    </repository>
+    <repository>
+      <id>mapr-releases</id>
+      <url>https://repository.mapr.com/nexus/content/repositories/releases</url>
+      <snapshots><enabled>true</enabled></snapshots>
+      <releases><enabled>true</enabled></releases>
+    </repository>
+  </repositories>
+  
+  
+  <properties>
+    <log4j.version>2.13.3</log4j.version>
+    <hivemq.version>1.2.1</hivemq.version>
+    <jackson.version>2.9.10</jackson.version>
+    <mapr.version>6.1.0-mapr</mapr.version>
+    <mapr.streams.version>1.1.1-mapr-1808</mapr.streams.version>
+ <!-- 
+    <scala.version>2.12.8</scala.version>
+    <scala.binary.version>2.12</scala.binary.version>
+    <spark.version>2.4.5.0-mapr-700</spark.version>
+-->
+<!-- 
+    <mapr.version>6.2.0.0-mapr</mapr.version>
+    <mapr.drill.version>1.16.1-mapr</mapr.drill.version>
+    <mapr.streams.version>2.1.1.0-mapr-700</mapr.streams.version>
+    <spark.version>2.4.5.0-mapr-700</spark.version> 
+    <scala.version>2.12.8</scala.version>
+    <scala.binary.version>2.12</scala.binary.version>
+-->
+    <guava.version>19.0</guava.version>
+  </properties>
+  
+  <dependencies>
+    <dependency>
+        <groupId>com.hivemq</groupId>
+        <artifactId>hivemq-mqtt-client</artifactId>
+        <version>${hivemq.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>com.mapr.streams</groupId>
+        <artifactId>mapr-streams</artifactId>
+        <version>${mapr.version}</version>
+    </dependency>
+<!--  
+    <dependency>
+        <groupId>org.apache.drill</groupId>
+        <artifactId>drill-client</artifactId>
+        <version>${mapr.drill.version}</version>
+    </dependency> -->
+    <dependency>
+        <groupId>org.apache.kafka</groupId>
+        <artifactId>connect-runtime</artifactId>
+        <version>${mapr.streams.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.kafka</groupId>
+        <artifactId>kafka-clients</artifactId>
+        <version>${mapr.streams.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.mapr.db</groupId>
+      <artifactId>maprdb</artifactId>
+      <version>${mapr.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>mapr-ojai-driver</artifactId>
+      <groupId>com.mapr.ojai</groupId>
+      <version>${mapr.version}</version>
+    </dependency>
+	<dependency>
+       <groupId>com.fasterxml.jackson.core</groupId>
+       <artifactId>jackson-databind</artifactId>
+       <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+ 	   <groupId>com.fasterxml.jackson.core</groupId>
+       <artifactId>jackson-annotations</artifactId>
+	   <version>${jackson.version}</version>
+	</dependency>
+<!--     <dependency>
+  		<groupId>org.apache.logging.log4j</groupId>
+  		<artifactId>log4j-api</artifactId>
+  		<version>${log4j.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.logging.log4j</groupId>
+  		<artifactId>log4j-core</artifactId>
+  		<version>${log4j.version}</version>
+  	</dependency>
+  	<dependency> 
+	  <groupId>org.slf4j</groupId>
+	  <artifactId>slf4j-log4j12</artifactId>
+	  <version>1.7.28</version>
+	</dependency> 
+-->
+	<dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
+    </dependency>
+
+
+<!--     
+    <dependency>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-library</artifactId>
+        <version>${scala.version}</version>
+    </dependency>
+ 	<dependency>
+        <groupId>org.apache.spark</groupId>
+        <artifactId>spark-yarn_${scala.binary.version}</artifactId>
+        <version>${spark.version}</version>
+    </dependency>
+ 	<dependency>
+  		<groupId>org.apache.spark</groupId>
+  		<artifactId>spark-core_${scala.binary.version}</artifactId>
+  		<version>${spark.version}</version>
+  		             <exclusions>
+             	<exclusion> 
+    				<groupId>org.slf4j</groupId>
+    				<artifactId>slf4j-log4j12</artifactId>
+  				</exclusion>
+  				<exclusion> 
+    				<groupId>log4j</groupId>
+    				<artifactId>log4j</artifactId>
+  				</exclusion>
+             </exclusions>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.spark</groupId>
+        <artifactId>spark-sql_${scala.binary.version}</artifactId>
+        <version>${spark.version}</version>
+        <exclusions>
+            <exclusion>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.spark</groupId>
+        <artifactId>spark-mllib_${scala.binary.version}</artifactId>
+        <version>${spark.version}</version>
+    </dependency>
+    <dependency>
+       <groupId>org.apache.spark</groupId>
+       <artifactId>spark-streaming-kafka-producer_${scala.binary.version}</artifactId>
+       <version>${spark.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.spark</groupId>
+        <artifactId>spark-streaming-kafka-0-10_${scala.binary.version}</artifactId>
+        <version>${spark.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.spark</groupId>
+        <artifactId>spark-streaming_${scala.binary.version}</artifactId>
+        <version>${spark.version}</version>
+    </dependency>
+ 	<dependency>
+    	<groupId>com.mapr.db</groupId>
+    	<artifactId>maprdb-spark_${scala.binary.version}</artifactId>
+    	<version>${spark.version}</version>
+	</dependency>
+-->
+
+  </dependencies>
+    
+  <build>
+     <plugins>
+         <plugin>
+             <groupId>org.apache.maven.plugins</groupId>
+             <artifactId>maven-compiler-plugin</artifactId>
+             <configuration>
+                 <source>1.8</source>
+                 <target>1.8</target>
+             </configuration>
+         </plugin>
+         <plugin>
+             <artifactId>maven-assembly-plugin</artifactId>
+             <version>2.5</version>
+             <configuration>
+                 <archive>
+                     <manifest>
+                         <mainClass>com.mapr.examples.Run</mainClass>
+                     </manifest>
+                 </archive>
+                 <descriptorRefs>
+                     <descriptorRef>jar-with-dependencies</descriptorRef>
+                 </descriptorRefs>
+             </configuration>
+             <executions>
+                 <execution>
+                     <id>make-assembly</id>
+                     <phase>package</phase>
+                     <goals>
+                         <goal>single</goal>
+                     </goals>
+                 </execution>   
+             </executions>
+         </plugin>
+     </plugins>
+  </build>
+
+</project>

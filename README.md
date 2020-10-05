@@ -1,5 +1,5 @@
 
-/* Data Fabric Configuration
+# Data Fabric Configuration
 
 1) Create Stream and topics with public permmissions in Data Fabric (from the console):
 
@@ -21,7 +21,7 @@ Table type: json
 
 maprcli table create -path /metrics  -tabletype json
 
-/* MOSQUITTO:
+# MOSQUITTO:
 Download from https://mosquitto.org/download/
 Installation on MacOS : brew install mosquitto
 Start Mosquitto (MQTT server) 
@@ -30,27 +30,27 @@ Start Mosquitto (MQTT server)
 /usr/local/sbin/mosquitto -c /usr/local/etc/mosquitto/mosquitto.conf
 
 
-/* MQTT Bridge ( MQTT > Kafka and Kafka > MQTT 
+# MQTT Bridge ( MQTT > Kafka and Kafka > MQTT 
 
 org.hpe.bridge.MQTTBridge
 
 
-/* Telemetry Consumer: Consume Kafka message to Populate Data Fabric Table - Metrics
+# Telemetry Consumer: Consume Kafka message to Populate Data Fabric Table - Metrics
 
 org.hpe.telemetry.TelemetryConsumer
 
 
-/* MQTT Device: Simmulate Device generating  telemetries (publish), and consuming event (subcribe)
+# MQTT Device: Simmulate Device generating  telemetries (publish), and consuming event (subcribe)
 
 org.hpe.sensor.Device
 
 
-/* Query à utiliser dans Drill (install Drill from MEP 7.0.0 with the installer - check Drill box)
+# Query à utiliser dans Drill (install Drill from MEP 7.0.0 with the installer - check Drill box)
 
 select * from dfs.`/metrics`
 
 
-/* Utilities
+# Utilities
 
 org.hpe.df.utilities.DeleteDBRows  - Delete data into table
 org.hpe.df.utilities.ViewDBRows	- List data into table
