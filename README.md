@@ -74,7 +74,8 @@ check with : maprcli cluster gateway resolve -dstcluster my.cluster.com
 
 
 
-##  Query à utiliser dans Drill (install Drill from MEP 7.0.0 with the installer - check Drill box)
+##  Query to use in Apache Drill:
+Install Drill from MEP 7.0.0 with the installer - by checking Drill box in component list)
 
 > select * from dfs.`/metrics`
 
@@ -82,4 +83,5 @@ check with : maprcli cluster gateway resolve -dstcluster my.cluster.com
 ##  Utilities
 
 > org.hpe.df.utilities.DeleteDBRows  (Delete data into '/metrics' table)
+
 > org.hpe.df.utilities.ViewDBRows - (List data into '/metrics' table)
