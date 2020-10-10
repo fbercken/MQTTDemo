@@ -13,6 +13,10 @@
         <url>http://scala-tools.org/repo-releases</url>
     </repository>
     <repository>
+    <id>mapr-releases</id>
+    <url>https://repository.mapr.com/maven/</url>
+</repository>
+    <repository>
       <id>mapr-releases</id>
       <url>https://repository.mapr.com/nexus/content/repositories/releases</url>
       <snapshots><enabled>true</enabled></snapshots>
@@ -71,6 +75,16 @@
         <version>${mapr.streams.version}</version>
     </dependency>
     <dependency>
+	    <groupId>org.apache.kafka</groupId>
+	    <artifactId>kafka-streams</artifactId>
+	    <version>${mapr.streams.version}</version>
+	</dependency>
+	<dependency>
+	     <groupId>org.rocksdb</groupId>
+	     <artifactId>rocksdbjni</artifactId>
+	     <version>5.7.3</version>
+	</dependency>
+	<dependency>
       <groupId>com.mapr.db</groupId>
       <artifactId>maprdb</artifactId>
       <version>${mapr.version}</version>

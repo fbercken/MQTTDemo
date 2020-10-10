@@ -107,8 +107,9 @@ public class Device {
 				dnsLogEntry.setTs( System.currentTimeMillis());
 
 				device.publish( "/sensor", objectMapper.writeValueAsString(dnsLogEntry) );
+				Thread.sleep(1000);
 				
-			} catch (JsonProcessingException e) {
+			} catch (Exception e) {
 				logger.error("Error: {}", e);
 			}
 			
