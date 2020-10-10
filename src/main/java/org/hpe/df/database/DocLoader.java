@@ -50,12 +50,8 @@ public class DocLoader<V> implements Closeable {
 
 	
 	public void close() {
-		if ( store != null ) {
-			store.close();
-		}
-		if ( connection != null ) {
-			connection.close();
-		}
+		if ( store != null ) store.close();
+		if ( connection != null ) connection.close();
 	}
 	
 	
