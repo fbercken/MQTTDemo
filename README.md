@@ -24,7 +24,7 @@ Table type: json
 maprcli table create -path /metrics  -tabletype json
 ```
 
-# MOSQUITTO:
+# MOSQUITTO (MQTT server):
 Download from https://mosquitto.org/download/
 Installation on MacOS : brew install mosquitto
 Start Mosquitto (MQTT server) 
@@ -40,17 +40,20 @@ Start Mosquitto (MQTT server)
 > org.hpe.bridge.MQTTBridge
 
 
-##  Telemetry Consumer: Consume Kafka message to Populate Data Fabric Table - Metrics
+##  Telemetry Consumer: 
+Consume Kafka message to Populate Data Fabric Table - Metrics
 
 > org.hpe.telemetry.TelemetryConsumer
 
 
-##  MQTT Device: Simmulate Device generating  telemetries (publish), and consuming event (subcribe)
+##  MQTT Device: 
+Simmulate Device generating telemetries (publish), and consuming event (subcribe) - based on HiveMQ
 
 > org.hpe.sensor.Device
 
 
-## Kafka Stream - windowing generating action if threshold exceeded
+## Kafka Stream 
+windowing generating actions if threshold exceeded
 
 ```
 mkdir /tmp/kafka-streams  //on client
@@ -59,10 +62,11 @@ mkdir /tmp/kafka-streams  //on client
 > org.hpe.stream.WindowedMeric
 
 
-## Gateway for Log compaction (on cluster)
+## Gateway Configuration 
+To configure Log compaction required by Kafka streaming (on cluster)
 
 ```
-sudo maprcli cluster gateway set -dstcluster my.cluster.com -gateways 10.0.142.58
+sudo maprcli cluster gateway set -dstcluster my.cluster.com -gateways <cldb IP address>
 ```
 
 check with : maprcli cluster gateway resolve -dstcluster my.cluster.com
@@ -77,5 +81,5 @@ check with : maprcli cluster gateway resolve -dstcluster my.cluster.com
 
 ##  Utilities
 
-> org.hpe.df.utilities.DeleteDBRows  - Delete data into table
-> org.hpe.df.utilities.ViewDBRows	- List data into table
+> org.hpe.df.utilities.DeleteDBRows  (Delete data into '/metrics' table)
+> org.hpe.df.utilities.ViewDBRows - (List data into '/metrics' table)
