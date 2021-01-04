@@ -40,11 +40,11 @@ public class TelemetryConsumer {
 				.build();	
 			
 			MessageConsumer<String,DNSLogEntry> consumer = new MessageConsumer.Builder<String,DNSLogEntry>()
-					.pooling(100)
-					.topicName(KAFKA_INCOMING_TOPIC)	
-					.propsFile("/dnsLogConsumer.props")
-					.consumerFunction( message -> docLoader.insert(message.value()) )
-					.build();
+				.pooling(100)
+				.topicName(KAFKA_INCOMING_TOPIC)	
+				.propsFile("/dnsLogConsumer.props")
+				.consumerFunction( message -> docLoader.insert(message.value()) )
+				.build();
 						
 		) {
 		

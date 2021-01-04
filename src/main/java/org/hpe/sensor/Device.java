@@ -4,7 +4,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
-
 import org.hpe.action.Action;
 import org.hpe.dnslog.DNSLogEntry;
 import org.slf4j.Logger;

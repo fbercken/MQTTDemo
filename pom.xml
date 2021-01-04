@@ -26,24 +26,25 @@
   
   
   <properties>
-    <log4j.version>2.13.3</log4j.version>
+    <log4j.version>2.14.0</log4j.version>
     <hivemq.version>1.2.1</hivemq.version>
     <jackson.version>2.9.10</jackson.version>
-    <mapr.version>6.1.0-mapr</mapr.version>
+
+    <mapr.version>6.1.0-mapr</mapr.version> 
     <mapr.streams.version>1.1.1-mapr-1808</mapr.streams.version>
- <!-- 
     <scala.version>2.12.8</scala.version>
     <scala.binary.version>2.12</scala.binary.version>
     <spark.version>2.4.5.0-mapr-700</spark.version>
--->
+
 <!-- 
     <mapr.version>6.2.0.0-mapr</mapr.version>
     <mapr.drill.version>1.16.1-mapr</mapr.drill.version>
     <mapr.streams.version>2.1.1.0-mapr-700</mapr.streams.version>
-    <spark.version>2.4.5.0-mapr-700</spark.version> 
+    <spark.version>2.4.5.0-mapr-700</spark.version>    
     <scala.version>2.12.8</scala.version>
     <scala.binary.version>2.12</scala.binary.version>
--->
+ -->  
+   
     <guava.version>19.0</guava.version>
   </properties>
   
@@ -57,13 +58,21 @@
         <groupId>com.mapr.streams</groupId>
         <artifactId>mapr-streams</artifactId>
         <version>${mapr.version}</version>
-    </dependency>
-<!--  
+    </dependency> 
+
+<!--
     <dependency>
         <groupId>org.apache.drill</groupId>
         <artifactId>drill-client</artifactId>
         <version>${mapr.drill.version}</version>
-    </dependency> -->
+        <exclusions>
+	        <exclusion>
+	            <groupId>org.slf4j</groupId>
+	            <artifactId>log4j-over-slf4j</artifactId>
+	        </exclusion>
+	    </exclusions>
+    </dependency> 
+  -->   
     <dependency>
         <groupId>org.apache.kafka</groupId>
         <artifactId>connect-runtime</artifactId>
@@ -223,8 +232,8 @@
                      <goals>
                          <goal>single</goal>
                      </goals>
-                 </execution>   
-             </executions>
+                 </execution>  
+             </executions>    
          </plugin>
      </plugins>
   </build>

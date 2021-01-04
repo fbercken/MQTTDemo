@@ -1,6 +1,7 @@
 package org.hpe.statestore;
 
 import org.ojai.Document;
+import org.ojai.DocumentStream;
 import org.ojai.store.Connection;
 import org.ojai.store.DocumentStore;
 import org.ojai.store.DriverManager;
@@ -23,11 +24,9 @@ public class DFStateStore<K,V> implements KeyValueStore<K,V>  {
 	private boolean open = false;
 	private String topic;
 	private String storeName;
-	private Serde<K> keySerde;
-	private Serde<V> valueSerde;
 	private DocumentStore store;
 	private Connection connection;
-	
+
 	protected Serializer<K> keySerializer;
 	protected Deserializer<K> keyDeserializer;
 	protected Serializer<V> valueSerializer;
@@ -43,17 +42,15 @@ public class DFStateStore<K,V> implements KeyValueStore<K,V>  {
 	@Override
 	public void init(ProcessorContext context, StateStore root) {
 		
+		this.open = true;
 		this.topic = context.topic();
-		this.keySerde = (Serde<K>) context.keySerde();
-		this.valueSerde = (Serde<V>) context.valueSerde();
 		this.storeName = (String) context.appConfigs().get("table");
 		this.connection = DriverManager.getConnection("ojai:mapr:");		
 		this.store = connection.storeExists(storeName)? connection.getStore(storeName) : connection.createStore(storeName);	
-		this.open = true;
 		
 		this.keySerializer = (Serializer<K>)  context.keySerde().serializer();
-		this.keyDeserializer = (Deserializer<K>) context.keySerde().deserializer();
 		this.valueSerializer = (Serializer<V>)  context.valueSerde().serializer();
+		this.keyDeserializer = (Deserializer<K>) context.keySerde().deserializer();
 		this.valueDeserializer = (Deserializer<V>) context.valueSerde().deserializer();
 	}
 
@@ -96,6 +93,10 @@ public class DFStateStore<K,V> implements KeyValueStore<K,V>  {
 	@Override
 	public KeyValueIterator<K, V> all() {
 		// TODO Auto-generated method stub
+		
+		DocumentStream stream = this.store.find();
+		
+		
 		return null;
 	}
 
@@ -107,26 +108,28 @@ public class DFStateStore<K,V> implements KeyValueStore<K,V>  {
 
 	@Override
 	public void put(K key, V value) {
-		// TODO Auto-generated method stub
-		
+		String id = this.keySerializer.serialize(this.topic,key).toString();
+		Document doc = this.connection.newDocument(value);
+		this.store.insertOrReplace(id,doc);	
 	}
 
 	@Override
 	public V putIfAbsent(K key, V value) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void putAll(List<KeyValue<K, V>> entries) {
-		// TODO Auto-generated method stub
-		
+		entries.forEach( (KeyValue<K, V> pair) -> put(pair.key, pair.value) );
 	}
 
 	@Override
 	public V delete(K key) {
-		// TODO Auto-generated method stub
-		return null;
+		String id = this.keySerializer.serialize(this.topic,key).toString();
+		byte[] json = this.store.findById(id).asJsonString().getBytes();
+		this.store.delete(id);
+		
+		return this.valueDeserializer.deserialize(this.topic, json);
 	}
 
 

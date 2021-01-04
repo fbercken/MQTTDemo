@@ -8,6 +8,7 @@ import org.ojai.store.Query;
 
 
 public class ViewDBRows {
+	
 
 	public static void main(String[] args) {
 		
@@ -29,5 +30,7 @@ public class ViewDBRows {
 			System.out.println(doc.asJsonString());
 		});
 	}
+	
+	
 
 }

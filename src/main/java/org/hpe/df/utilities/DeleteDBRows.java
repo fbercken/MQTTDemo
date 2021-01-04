@@ -11,7 +11,7 @@ public class DeleteDBRows {
 
 	public static void main(String[] args) {
 		
-		String storeName = "/metrics";
+		String storeName = "/metrics"; //"/metrics";
 		DocumentStore store;
 		Connection connection = DriverManager.getConnection("ojai:mapr:");
 

@@ -3,6 +3,7 @@ package org.hpe.stream;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.Serdes;
@@ -14,9 +15,9 @@ import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.KStream;
+//import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.Produced;
 import org.apache.kafka.streams.kstream.TimeWindows;
-import org.apache.kafka.streams.kstream.Windowed;
 import org.apache.kafka.streams.processor.TimestampExtractor;
 import org.apache.kafka.streams.Topology;
 import org.hpe.action.Action;
@@ -30,6 +31,7 @@ public class WindowedMetric {
 	final String APP_ID = "windowApp";
 	final String INPUT_TOPIC = "/sensor:metric";
 	final String OUTPUT_TOPIC = "/sensor:action";
+	final String AlERT_TOPIC = "/alert:devices";
 	final String DEFAULT_STREAM = "/sample-stream";
 	
 	
@@ -41,18 +43,18 @@ public class WindowedMetric {
         props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 500); 
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, StringSerde.class);
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG,LongSerde.class); 
-        props.put(StreamsConfig.STREAMS_DEFAULT_STREAM_CONFIG, DEFAULT_STREAM);
+      //  props.put(StreamsConfig.STREAMS_DEFAULT_STREAM_CONFIG, DEFAULT_STREAM);
  
         return props;
 	}
 	
 	
 	public Topology buildTopology(TimeWindows timeWindow) {
-				
+		
 		StreamsBuilder builder = new StreamsBuilder();			
 		Consumed.with(new DNSLogTimestampExtractor());
 		
-		builder.stream( INPUT_TOPIC, Consumed.with(Serdes.String(),new DNSLogSerde())) 	
+		KStream<String,Action> stream = builder.stream( INPUT_TOPIC, Consumed.with(Serdes.String(),new DNSLogSerde())) 	
 			.map( (key,dnsLog) -> new KeyValue<>( dnsLog.getUid(), 1L) )
 			.groupByKey()
 			.windowedBy(timeWindow)
@@ -66,8 +68,10 @@ public class WindowedMetric {
 				action.setName( "Do something " + count.toString());
 				action.setDeviceId(key.key());
 				return new KeyValue<>( key.key(), action);
-			})
-			.to(OUTPUT_TOPIC, Produced.with( Serdes.String(), new ActionSerde()) );
+			});
+
+		//stream.to(AlERT_TOPIC, Produced.with( Serdes.String(), new ActionSerde()) );			
+		stream.to(OUTPUT_TOPIC, Produced.with( Serdes.String(), new ActionSerde()) );
 			
 		return builder.build();	
 	}

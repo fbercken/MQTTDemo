@@ -24,7 +24,27 @@
   </property>
   <property>
       <name>hadoop.proxyuser.fberque.groups</name>n    
-      <value>*</value>n    
+      <value>*</value>  
       <description>Allow the superuser fberque to impersonate any member of any group</description>
   </property>
+  
+  <property>
+  	<name>db.mapr.putbuffer.threshold.mb</name>
+  	<value>32</value>
+  </property>
+  <property>
+  	<name>db.mapr.putbuffer.threshold.sec</name>
+  	<value>3</value>
+  </property>
+  <property>
+  	<name>fs.mapr.tabletlru.size.kb</name>
+  	<value>512</value>
+  </property>
+  <property>
+  	<name>fs.mapr.threads</name>
+  	<value>64</value>
+  </property>
+  
+  
+  
 </configuration>
